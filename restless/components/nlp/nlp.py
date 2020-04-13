@@ -12,9 +12,11 @@ try:
         HierarchicalAttentionNetwork,
         DEFAULT_TRAINING_DATA_PATH,
     )
+    from restless.components.nlp.text_normalizer import text_normalizer
     from restless.components.utils import utils as utils
 except:
     from hann import HierarchicalAttentionNetwork, DEFAULT_TRAINING_DATA_PATH
+    from restless.components.nlp.text_normalizer import text_normalizer
     from ..utils import utils as utils
 
 stats = utils.stats
@@ -45,6 +47,7 @@ class NLP:
         # so tokenize every string into a word
         # For example, "4069" will be considered a sentence,
         # tokenized as a sequence of words "4", "0", "6", "9".
+        self.text_normalizer = text_normalizer
         hann = HierarchicalAttentionNetwork(
             load_default_model=load_default_hann_model,
             features=top_features,

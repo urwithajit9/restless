@@ -82,10 +82,8 @@ sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
 try:
     from restless.components.utils import utils
-    from restless.components.nlp.text_normalizer import text_normalizer
 except:
     from utils import utils
-    from text_normalizer import text_normalizer
 
 # Hyperparams
 MAX_SENTENCE_LENGTH = 100
@@ -132,6 +130,8 @@ class HierarchicalAttentionNetwork:
         sent_token_level: str = "sent",  # Default tokenization level for sentences
         **kwargs
     ):
+        self.text_normalizer = super(HierarchicalAttentionNetwork, self).text_normalizer
+
         self.model = None
 
         self.data_train = pd.read_csv(
@@ -482,10 +482,10 @@ class HierarchicalAttentionNetwork:
             y_pred = model.predict(x_val)
             # Reverse one-hot encoding
             _y_val = np.argmax(y_val, axis=1)
-            if not model_base:
-                _y_pred = np.argmax(y_pred, axis=1)
-            else:
-                _y_pred = y_pred
+            # if not model_base:
+            _y_pred = np.argmax(y_pred, axis=1)
+            # else:
+              #  _y_pred = y_pred
             # Model evaluation / metrics
             metrics = stats.get_model_metrics(
                 _y_val, _y_pred, labels, print_output=True
